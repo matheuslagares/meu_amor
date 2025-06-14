@@ -1,16 +1,180 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Galeria Galáxia</title>
+  <link rel="stylesheet" href="style_galaxia.css" />
 </head>
 <body>
-    <div><img src="img/IMG_20240320_173213_155.webp" alt=""></div>
-    <div><img src="img/IMG_20240331_175813_470.webp" alt=""></div>
-    <div><img src="img/IMG_20240331_180011_930.webp" alt=""></div>
-    <div><img src="img/IMG_20240526_205152_892.webp" alt=""></div>
-    <div><img src="img/IMG_20240531_140556_448.webp" alt=""></div>
-    <script></script>
+  <canvas id="stars"></canvas>
+
+  <div class="galeria-container">
+    <div class="tabs">
+      <button class="tab active" data-tab="inicio">Início</button>
+      <button class="tab" data-tab="galaxia">Galáxia</button>
+      <button class="tab" data-tab="harry">Harry Potter</button>
+      <button class="tab" data-tab="ibira">Ibira</button>
+      <button class="tab" data-tab="igreja">Igreja</button>
+    </div>
+
+    <div class="galerias">
+      <div class="galeria active" id="inicio">
+        <button class="prev">←</button>
+        <img src="img/comeco01.jpg" alt="" />
+        <button class="next">→</button>
+      </div>
+
+      <div class="galeria" id="galaxia">
+        <button class="prev">←</button>
+        <img src="img/gala01.jpg" alt="" />
+        <button class="next">→</button>
+      </div>
+
+      <div class="galeria" id="harry">
+        <button class="prev">←</button>
+        <img src="img/harry01.jpg" alt="" />
+        <button class="next">→</button>
+      </div>
+
+      <div class="galeria" id="ibira">
+        <button class="prev">←</button>
+        <img src="img/ibira01.jpg" alt="" />
+        <button class="next">→</button>
+      </div>
+
+      <div class="galeria" id="igreja">
+        <button class="prev">←</button>
+        <img src="img/igreja01.webp" alt="" />
+        <button class="next">→</button>
+      </div>
+    </div>
+  </div>
+
+
+
+<script>
+// Estrelas animadas
+const canvas = document.getElementById('stars');
+const ctx = canvas.getContext('2d');
+let width = window.innerWidth;
+let height = window.innerHeight;
+let stars = [];
+let comets = [];
+
+function resizeCanvas() {
+  width = canvas.width = window.innerWidth;
+  height = canvas.height = window.innerHeight;
+  createStars(150);
+}
+
+function createStars(count) {
+  stars = Array.from({ length: count }, () => ({
+    x: Math.random() * width,
+    y: Math.random() * height,
+    radius: Math.random() * 1.5,
+    alpha: Math.random(),
+    delta: Math.random() * 0.02
+  }));
+}
+
+function createComet() {
+  const size = Math.random() * 2 + 1.5;
+  comets.push({
+    x: -100,
+    y: Math.random() * height / 2,
+    vx: Math.random() * 3 + 2,
+    vy: Math.random() * 1 + 0.5,
+    size,
+    trail: []
+  });
+}
+
+function updateComets() {
+  comets = comets.filter(comet => {
+    comet.x += comet.vx;
+    comet.y += comet.vy;
+    comet.trail.push({ x: comet.x, y: comet.y });
+    if (comet.trail.length > 30) comet.trail.shift();
+    comet.trail.forEach((point, i) => {
+      const opacity = i / comet.trail.length;
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+      ctx.arc(point.x, point.y, comet.size, 0, 2 * Math.PI);
+      ctx.fill();
+    });
+    return comet.x <= width + 100 && comet.y <= height + 100;
+  });
+}
+
+function draw() {
+  ctx.clearRect(0, 0, width, height);
+  stars.forEach(star => {
+    star.alpha += star.delta;
+    if (star.alpha <= 0 || star.alpha >= 1) star.delta *= -1;
+    ctx.globalAlpha = star.alpha;
+    ctx.beginPath();
+    ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+    ctx.fillStyle = '#fff';
+    ctx.fill();
+  });
+  ctx.globalAlpha = 1;
+  updateComets();
+  requestAnimationFrame(draw);
+}
+
+function startCometLoop() {
+  if (Math.random() < 0.8) createComet();
+  setTimeout(startCometLoop, Math.random() * 6000 + 4000);
+}
+
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+draw();
+startCometLoop();
+
+// Tabs
+const tabs = document.querySelectorAll('.tab');
+const galerias = document.querySelectorAll('.galeria');
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    galerias.forEach(g => g.classList.remove('active'));
+    const tabId = tab.getAttribute('data-tab');
+    document.getElementById(tabId).classList.add('active');
+  });
+});
+
+// Navegação por imagens
+const galeriaImgs = {
+  inicio: ['comeco01.jpg', 'comeco02.webp', 'comeco03.webp'],
+  galaxia: ['gala01.jpg', 'gala02.jpg', 'gala03.jpg'],
+  harry: ['harry01.jpg', 'harry02.jpg', 'harry03.jpg'],
+  ibira: ['ibira01.jpg', 'ibira02.jpg', 'ibira03.jpg'],
+  igreja: ['igreja01.webp', 'igreja02.webp', 'igreja03.webp']
+};
+
+const galeriasDOM = document.querySelectorAll('.galeria');
+galeriasDOM.forEach(galeria => {
+  const id = galeria.id;
+  let index = 0;
+  const img = galeria.querySelector('img');
+  const prev = galeria.querySelector('.prev');
+  const next = galeria.querySelector('.next');
+
+  prev.addEventListener('click', () => {
+    index = (index - 1 + galeriaImgs[id].length) % galeriaImgs[id].length;
+    img.src = `img/${galeriaImgs[id][index]}`;
+  });
+
+  next.addEventListener('click', () => {
+    index = (index + 1) % galeriaImgs[id].length;
+    img.src = `img/${galeriaImgs[id][index]}`;
+  });
+});
+
+    </script>
 </body>
 </html>

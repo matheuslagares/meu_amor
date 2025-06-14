@@ -9,12 +9,12 @@
 }
 
 body {
-  margin: 0;
-  padding: 0;
   overflow-x: hidden;
   background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
   color: white;
   font-family: 'Josefin Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 nav {
@@ -48,16 +48,30 @@ nav a:hover {
   color: #a4a9ff;
 }
 
+main {
+  position: relative;
+  z-index: 1;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: -1;
+}
+
 section {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+  min-height: auto;
   padding: 40px;
   margin: 60px auto;
   width: 90%;
   max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .card {
@@ -65,6 +79,8 @@ section {
   backdrop-filter: blur(6px);
   border-radius: 20px;
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+  margin-bottom: 30px;
+  padding: 30px;
   transition: all 0.4s ease;
 }
 
@@ -73,22 +89,12 @@ section {
   box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
 }
 
-article {
-  background-image: url(img/IMG_20240320_173540_205.webp);
-  background-position: center center;
-  background-size: cover;
-  width: 80vw;
-  height: 80vw;
-  max-width: 400px;
-  max-height: 400px;
-  border-radius: 100%;
-  margin-bottom: 20px;
-}
-
 h1, h2 {
-  color: rgb(116, 116, 163);
   font-family: "Dancing Script", cursive;
+  color: rgb(116, 116, 163);
   font-size: 2.8rem;
+  text-align: center;
+  word-break: break-word;
 }
 
 p {
@@ -96,6 +102,7 @@ p {
   max-width: 700px;
   margin: 10px auto;
   line-height: 1.6;
+  padding: 0 10px;
 }
 
 .btn {
@@ -108,7 +115,10 @@ p {
   cursor: pointer;
   transition: background 0.3s;
   margin-top: 20px;
+  width: 100%;
   max-width: 250px;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .btn:hover {
@@ -116,16 +126,18 @@ p {
   color: #000;
 }
 
-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
+article {
+  background-image: url(img/IMG_20240320_173540_205.webp);
+  background-position: center;
+  background-size: cover;
+  border-radius: 100%;
   width: 100%;
-  height: 100%;
-  z-index: -1;
+  aspect-ratio: 1 / 1;
+  max-width: 400px;
+  margin-bottom: 20px;
 }
 
-/* ====== RESPONSIVO PARA CELULAR ====== */
+/* ====== RESPONSIVO PARA CELULARES ====== */
 @media (max-width: 768px) {
   nav {
     flex-direction: column;
@@ -161,19 +173,13 @@ canvas {
 
   p {
     font-size: 1rem;
-    padding: 0 10px;
   }
 
   .btn {
-    width: 100%;
     padding: 12px 20px;
-    font-size: 1em;
   }
 
   article {
-    width: 90vw;
-    height: 90vw;
-    max-width: none;
-    max-height: none;
+    width: 100%;
   }
 }

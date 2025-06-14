@@ -1,0 +1,93 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Josefin Sans', sans-serif;
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  color: white;
+  overflow: hidden;
+}
+
+canvas#stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.galeria-container {
+  position: relative;
+  z-index: 1;
+  padding: 2rem;
+  max-width: 900px;
+  margin: auto;
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.tab {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.tab:hover,
+.tab.active {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.galerias {
+  position: relative;
+}
+
+.galeria {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.galeria.active {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.galeria img {
+  max-width: 80%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+  transition: transform 0.4s ease;
+}
+
+button.prev,
+button.next {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: white;
+  font-size: 2rem;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button.prev:hover,
+button.next:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
