@@ -1,0 +1,301 @@
+<link rel="stylesheet" href="style_costelação.css">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+      <canvas id="stars"></canvas>
+
+  <!-- Conteúdo principal -->
+    <main class="temas" id="pagina02">
+        <div class="tema selecionado">
+          <div class="conteudo01">
+              <div class="evento">
+                <h1>🌱 Tudo começou - 29/10/2023</h1>
+                <p>Conversamos e decidimos orar juntos</p>
+                <img src="img/20230812220540_IMG_8460~2.jpg" alt="Foto">
+              </div>
+              <div class="evento">
+                <h1>💋 Nosso primeiro beijo - 08/12/2023</h1>
+                <p>Um turbilhão de emoções, um dia incrível e um filme horrível</p>
+                <img src="img/IMG_20240320_173213_155.webp" alt="Foto">
+              </div>
+              <div class="evento">
+                <h1>❤️ Confirmação - 14/02/2024</h1>
+                <p>Você tentou fugir, mas o Senhor te pegou na curva 😂</p>
+                <img src="img/IMG_20240526_205116_449.webp" alt="">
+              </div>
+          </div>
+        </div>
+        <div class="tema">
+          <div class="conteudo02">
+            <h1 class="data">24/02/2024</h1>
+            <h1 class="titulo">O INÍCIO DE UMA CONSTELAÇÃO DE AVENTURAS</h1>
+            <p class="mensagem">
+              O início de uma viagem louca e a construção de uma Constelação de aventuras,<br>
+              uma Galáxia de Memórias e um Universo de Poesias Estelares.
+            </p>
+            <h2 class="assinatura">TE AMO</h2>
+          </div>
+        </div>
+        <div class="tema selecionado">
+          <div class="conteudo03">
+            <div class="video-wrapper">
+              <video id="videoGalaxia" src="img/lv_7487656103707151669_20250613205512.mp4" autoplay muted loop playsinline></video>
+              <button id="playPause" class="btn-video">
+                ⏸️
+              </button>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="tema">
+            <div class="conteudo04">
+                <div id="tempo">
+                    <h1>QUE NOSSA CONSTELAÇÃO CONTINUE CRESCENDO</h1>
+                    <div class="timer-container">
+                        <div class="unit">
+                            <div class="value" id="anos">0</div>
+                            <div class="label">Ano(s)</div>
+                        </div>
+                        <div class="unit">
+                            <div class="value" id="meses">0</div>
+                            <div class="label">Mês(es)</div>
+                        </div>
+                        <div class="unit">
+                            <div class="value" id="dias">0</div>
+                            <div class="label">Dia(s)</div>
+                        </div>
+                        <div class="unit">
+                            <div class="value" id="horas">00</div>
+                            <div class="label">Hora(s)</div>
+                        </div>
+                        <div class="unit">
+                            <div class="value" id="minutos">00</div>
+                            <div class="label">Minuto(s)</div>
+                        </div>
+                        <div class="unit">
+                            <div class="value" id="segundos">00</div>
+                            <div class="label">Segundo(s)</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                  <div class="sun" ></div>
+                  <div class="earth">
+                    <div class="moon"></div>
+                  </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="tema">
+            <div class="conteudo05">
+              <h1>ECLECIASTES 4:12</h1>
+              <h2>Um homem sozinho pode ser vencido, mas dois conseguem resistir; o cordão de três dobras não se rompe facilmente.</h2>
+              <h3>Força na União:</h3>
+              <p>A passagem ressalta que a união e a colaboração trazem força e proteção. Dois indivíduos, trabalhando juntos, são mais fortes do que um sozinho e podem se defender melhor.</p>
+
+              <h3> Amizade e Companheirismo:</h3>
+              <p>A ideia do cordão de três dobras pode ser aplicada a amizades e relacionamentos, mostrando que laços fortes e duradouros são difíceis de serem rompidos.</p>
+
+              <h3>Casamento e Família:</h3>
+              <p>Em muitos contextos, a passagem é usada para simbolizar a força e a união em casamentos e famílias, onde a presença de Deus (a terceira dobra) fortalece a relação.</p>
+
+              <h3>Trabalho em Equipe:</h3>
+              <p>A ideia também se aplica ao ambiente de trabalho, onde times colaborativos são mais eficazes do que indivíduos trabalhando isoladamente.</p>
+            </div>
+        </div>
+    </main>
+
+<ul class="botoes">
+  <li><button class="botao"><img src="img/planeta01.png" alt="Planeta 1" /></button></li>
+  <li><button class="botao"><img src="img/planeta02.png" alt="Planeta 2" /></button></li>
+  <li><button class="botao selecionado"><img src="img/planeta03.png" alt="Planeta 3" /></button></li>
+  <li><button class="botao"><img src="img/planeta04.png" alt="Planeta 4" /></button></li>
+  <li><button class="botao"><img src="img/planeta05.png" alt="Planeta 5" /></button></li>
+</ul>
+
+<script>
+  const canvas = document.getElementById('stars');
+  const ctx = canvas.getContext('2d');
+
+  let width = window.innerWidth;
+  let height = window.innerHeight;
+  let stars = [];
+  let comets = [];
+
+  // Resize canvas
+  function resizeCanvas() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+    createStars(150);
+  }
+
+  // Star setup
+  function createStars(count) {
+    stars = Array.from({ length: count }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      radius: Math.random() * 1.5,
+      alpha: Math.random(),
+      delta: Math.random() * 0.02
+    }));
+  }
+
+  // Create a single comet
+  function createComet() {
+    const size = Math.random() * 2 + 1.5;
+    comets.push({
+      x: -100,
+      y: Math.random() * height / 2,
+      vx: Math.random() * 3 + 2,
+      vy: Math.random() * 1 + 0.5,
+      size,
+      trail: []
+    });
+  }
+
+  // Comet animation
+  function updateComets() {
+    comets = comets.filter(comet => {
+      comet.x += comet.vx;
+      comet.y += comet.vy;
+      comet.trail.push({ x: comet.x, y: comet.y });
+
+      if (comet.trail.length > 30) comet.trail.shift();
+
+      comet.trail.forEach((point, i) => {
+        const opacity = i / comet.trail.length;
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+        ctx.arc(point.x, point.y, comet.size, 0, 2 * Math.PI);
+        ctx.fill();
+      });
+
+      return comet.x <= width + 100 && comet.y <= height + 100;
+    });
+  }
+
+  // Star animation
+  function draw() {
+    ctx.clearRect(0, 0, width, height);
+
+    stars.forEach(star => {
+      star.alpha += star.delta;
+      if (star.alpha <= 0 || star.alpha >= 1) star.delta *= -1;
+
+      ctx.globalAlpha = star.alpha;
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+      ctx.fillStyle = '#fff';
+      ctx.fill();
+    });
+
+    ctx.globalAlpha = 1;
+    updateComets();
+
+    requestAnimationFrame(draw);
+  }
+
+  // Comet loop (interval between appearances)
+  function startCometLoop() {
+    if (Math.random() < 0.8) createComet();
+    setTimeout(startCometLoop, Math.random() * 6000 + 4000);
+  }
+
+  // Setup
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+  draw();
+  startCometLoop();
+
+  const botoes = document.querySelectorAll(".botao");
+    const conteudos = document.querySelectorAll(".tema");
+
+    botoes.forEach((botao, indice) => {
+        botao.addEventListener("click", () => {
+            desselecionarBotao();
+            desselecionarTema();
+
+            botao.classList.add("selecionado");
+            conteudos[indice].classList.add("selecionado");
+        });
+    });
+
+    function desselecionarTema() {
+        const temaSelecionado = document.querySelector(".tema.selecionado");
+        if (temaSelecionado) {
+            temaSelecionado.classList.remove("selecionado");
+        }
+    }
+
+    function desselecionarBotao() {
+        const botaoSelecionado = document.querySelector(".botao.selecionado");
+        if (botaoSelecionado) {
+            botaoSelecionado.classList.remove("selecionado");
+        }
+    }
+    const dataInicial = new Date("2024-02-24T00:00:00");
+
+  function atualizarTemporizador() {
+    const agora = new Date();
+
+    let anos = agora.getFullYear() - dataInicial.getFullYear();
+    let meses = agora.getMonth() - dataInicial.getMonth();
+    let dias = agora.getDate() - dataInicial.getDate();
+    let horas = agora.getHours() - dataInicial.getHours();
+    let minutos = agora.getMinutes() - dataInicial.getMinutes();
+    let segundos = agora.getSeconds() - dataInicial.getSeconds();
+
+    if (segundos < 0) {
+      segundos += 60;
+      minutos--;
+    }
+    if (minutos < 0) {
+      minutos += 60;
+      horas--;
+    }
+    if (horas < 0) {
+      horas += 24;
+      dias--;
+    }
+    if (dias < 0) {
+      const mesAnterior = new Date(agora.getFullYear(), agora.getMonth(), 0);
+      dias += mesAnterior.getDate();
+      meses--;
+    }
+    if (meses < 0) {
+      meses += 12;
+      anos--;
+    }
+
+    document.getElementById('anos').textContent = anos;
+    document.getElementById('meses').textContent = meses;
+    document.getElementById('dias').textContent = dias;
+    document.getElementById('horas').textContent = String(horas).padStart(2, '0');
+    document.getElementById('minutos').textContent = String(minutos).padStart(2, '0');
+    document.getElementById('segundos').textContent = String(segundos).padStart(2, '0');
+  }
+
+  setInterval(atualizarTemporizador, 1000);
+  atualizarTemporizador();
+
+  const video = document.getElementById('videoGalaxia');
+  const btn = document.getElementById('playPause');
+
+  btn.addEventListener('click', () => {
+    if (video.paused) {
+      video.play();
+      btn.textContent = '⏸️';
+    } else {
+      video.pause();
+      btn.textContent = '▶️';
+    }
+  });
+
+</script>
+</body>
+</html>

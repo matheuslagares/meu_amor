@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="style.css">
+  <title>Você é minha estrela</title>
+</head>
+<body>
+  <nav>
+    <img src="img/planeta01.png" alt="logo_estrela">
+    <div class="nav-links">
+      <a href="Constelacao.html">Nossa Constelação</a>
+      <a href="galaxia.html">Galáxia de Memórias</a>
+      <a href="mensagens.html">Mensagens Estelares</a>
+    </div>
+  </nav>
+
+  <main>
+    <canvas id="stars"></canvas>
+
+    <section id="home">
+      <h1>Você é minha estrela</h1>
+      <p>De todas as estrelas do universo, você é a que brilha mais forte para mim.</p>
+      <button class="btn" onclick="document.getElementById('constelacoes').scrollIntoView({behavior: 'smooth'})">Começar a viagem</button>
+    </section>
+
+    <section id="constelacoes" class="card">
+  <h2>Nossa Constelação</h2>
+  <p>
+    Momentos importantes da nossa história conectados como estrelas no céu. Cada um brilha com sua própria luz, formando algo único.
+  </p>
+  <button class="btn" onclick="window.location.href='Constelacao.html'">Aperte</button>
+</section>
+
+<section id="galeria" class="card">
+  <h2>Galáxia de Memórias</h2>
+  <p>
+    Um pequeno universo de fotos e lembranças. Cada imagem guarda uma emoção, uma risada, um momento nosso.
+  </p>
+  <button class="btn" onclick="window.location.href='galaxia.html'">Explorar Galáxia</button>
+</section>
+
+<section id="mensagens" class="card">
+  <h2>Mensagens Estelares</h2>
+  <p>
+    Cartas de amor escritas nas entrelinhas do tempo, flutuando no espaço só nosso.
+  </p>
+  <button class="btn" onclick="window.location.href='mensagens.html'">Ver Mensagens</button>
+</section>
+
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

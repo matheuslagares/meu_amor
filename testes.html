@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Desde 24/02/2024</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    canvas#stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .conteudo {
+      position: relative;
+      z-index: 1;
+      height: 25%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #2c3e50;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      font-size: 2.2em;
+      color: white;
+      text-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+    }
+
+    .timer-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .unit {
+      background-color: white;
+      padding: 20px 25px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      min-width: 100px;
+      transition: transform 0.2s ease;
+    }
+
+    .unit:hover {
+      transform: translateY(-4px);
+    }
+
+    .value {
+      font-size: 2.5em;
+      font-weight: 700;
+    }
+
+    .label {
+      font-size: 0.9em;
+      margin-top: 5px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Canvas das estrelas -->
+  <canvas id="stars"></canvas>
+
+  <!-- Conteúdo principal -->
+  <div class="conteudo">
+    <h1>O Inicio da nossa Constelação</h1>
+    <div class="timer-container">
+      <div class="unit">
+        <div class="value" id="anos">0</div>
+        <div class="label">Ano(s)</div>
+      </div>
+      <div class="unit">
+        <div class="value" id="meses">0</div>
+        <div class="label">Mês(es)</div>
+      </div>
+      <div class="unit">
+        <div class="value" id="dias">0</div>
+        <div class="label">Dia(s)</div>
+      </div>
+      <div class="unit">
+        <div class="value" id="horas">00</div>
+        <div class="label">Hora(s)</div>
+      </div>
+      <div class="unit">
+        <div class="value" id="minutos">00</div>
+        <div class="label">Minuto(s)</div>
+      </div>
+      <div class="unit">
+        <div class="value" id="segundos">00</div>
+        <div class="label">Segundo(s)</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // TEMPORIZADOR
+    const dataInicial = new Date("2024-02-24T00:00:00");
+
+    function atualizarTemporizador() {
+      const agora = new Date();
+
+      let anos = agora.getFullYear() - dataInicial.getFullYear();
+      let meses = agora.getMonth() - dataInicial.getMonth();
+      let dias = agora.getDate() - dataInicial.getDate();
+      let horas = agora.getHours() - dataInicial.getHours();
+      let minutos = agora.getMinutes() - dataInicial.getMinutes();
+      let segundos = agora.getSeconds() - dataInicial.getSeconds();
+
+      if (segundos < 0) {
+        segundos += 60;
+        minutos--;
+      }
+      if (minutos < 0) {
+        minutos += 60;
+        horas--;
+      }
+      if (horas < 0) {
+        horas += 24;
+        dias--;
+      }
+      if (dias < 0) {
+        const mesAnterior = new Date(agora.getFullYear(), agora.getMonth(), 0);
+        dias += mesAnterior.getDate();
+        meses--;
+      }
+      if (meses < 0) {
+        meses += 12;
+        anos--;
+      }
+
+      document.getElementById('anos').textContent = anos;
+      document.getElementById('meses').textContent = meses;
+      document.getElementById('dias').textContent = dias;
+      document.getElementById('horas').textContent = String(horas).padStart(2, '0');
+      document.getElementById('minutos').textContent = String(minutos).padStart(2, '0');
+      document.getElementById('segundos').textContent = String(segundos).padStart(2, '0');
+    }
+
+    setInterval(atualizarTemporizador, 1000);
+    atualizarTemporizador();
+
+    // ESTRELAS
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    let w, h, stars = [];
+
+    function resizeCanvas() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+
+    function createStars(count) {
+      stars = [];
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          radius: Math.random() * 1.5,
+          alpha: Math.random(),
+          delta: Math.random() * 0.02
+        });
+      }
+    }
+
+    function drawStars() {
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = '#fff';
+      for (let star of stars) {
+        ctx.globalAlpha = star.alpha;
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        star.alpha += star.delta;
+        if (star.alpha <= 0 || star.alpha >= 1) star.delta *= -1;
+      }
+      requestAnimationFrame(drawStars);
+    }
+
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      createStars(150);
+    });
+
+    resizeCanvas();
+    createStars(150);
+    drawStars();
+  </script>
+
+</body>
+</html>
+
